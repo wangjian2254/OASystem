@@ -1,3 +1,4 @@
+#coding=utf-8
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -65,11 +66,11 @@ class Project(models.Model):
     name=models.CharField(max_length=30,verbose_name=u'项目名')
     desc=models.CharField(max_length=500,verbose_name=u'项目描述')
     code=models.CharField(max_length=30,unique=True,verbose_name=u'项目代码',help_text=u'IDE中的项目名')
-    start_date=models.CharField(verbose_name=u'开始日期')
-    end_date=models.CharField(verbose_name=u'预计结束日期')
-    real_end_date=models.CharField(verbose_name=u'实际结束日期')
+    start_date=models.DateField(verbose_name=u'开始日期')
+    end_date=models.DateField(verbose_name=u'预计结束日期')
+    real_end_date=models.DateField(verbose_name=u'实际结束日期')
     status=models.IntegerField(default=1,verbose_name=u'状态',help_text=u'未开始、进行中、结束')
-    to_user=models.ForeignKey(User,related_name='to',blank=True,null=True,verbose_name=u'指定给')
+    to_user=models.ForeignKey(User,related_name='topersion',blank=True,null=True,verbose_name=u'指定给')
     team_Name=models.CharField(max_length=30,verbose_name=u'团队名称')
 
 class SVNProject(models.Model):
@@ -102,8 +103,8 @@ class Task(models.Model):
     finish_user=models.ForeignKey(User,related_name='finish',blank=True,null=True,verbose_name=u'完成者')
     jb=models.IntegerField(default=3,verbose_name=u'优先级')
     yuji_time=models.IntegerField(verbose_name=u'预计工时')
-    start_date=models.CharField(verbose_name=u'开始日期')
-    end_date=models.CharField(verbose_name=u'结束日期')
+    start_date=models.DateField(verbose_name=u'开始日期')
+    end_date=models.DateField(verbose_name=u'结束日期')
     type=models.ForeignKey(TaskType,verbose_name=u'任务类型')
     other_user=models.ForeignKey(User,blank=True,null=True,related_name='other',verbose_name=u'配合人员')
     files=models.ManyToManyField(DownloadFile,blank=True,null=True,verbose_name=u'附件')
