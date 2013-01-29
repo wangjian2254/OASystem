@@ -4,6 +4,9 @@ from django.db import models
 
 # Create your models here.
 
+class SystemSetting(models.Model):
+    rtx_host=models.URLField(verbose_name=u'腾讯通IP网址')
+
 class Dept(models.Model):
     name=models.CharField(max_length=30,verbose_name=u'部门名称')
     desc=models.CharField(max_length=200,verbose_name=u'部门简介')
@@ -20,6 +23,8 @@ class Role(models.Model):
 
     class Meta:
         permissions=(
+            ('user_change',u'用户管理'),
+
             ('add_Project',u'添加项目'),
             ('modify_Project',u'修改项目'),
             ('del_Project',u'删除项目'),
@@ -57,6 +62,7 @@ class Person(models.Model):
     #用户个人信息
     user=models.OneToOneField(User,verbose_name=u'登录账户')
     dept=models.ManyToManyField(Dept,verbose_name=u'隶属部门')
+    rtx_user=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'腾讯通账号')
     svn_user=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'svn账号')
     svn_pwd=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'svn密码')
 
