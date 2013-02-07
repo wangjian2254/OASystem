@@ -6,9 +6,10 @@ Created on 2011-3-19
 '''
 from django.conf.urls.defaults import patterns
 from OASystem.oa.flexviews import oaGateway
+from oa.views import menu
 
 urlpatterns = patterns('^oa/$',
-#                       (r'^tiaozheng', tiaozhengOrderBB),
+                       (r'^menu', menu),
                        (r'^geteway/', oaGateway
                            ),
                        )

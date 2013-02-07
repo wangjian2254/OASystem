@@ -62,7 +62,24 @@ def getUser(request):
     return getResult(request.user)
 @login_required
 def getAllUser(request):
-    return getResult(User.objects.all())
+    userlist=[]
+    for u in User.objects.all():
+        udict={}
+        udict['id']=u.pk
+        udict['username']=u.username
+        udict['is_active']=u.is_active
+        udict['last_name']=u.last_name
+        if hasattr(u,'person'):
+            udict['dept']=[]
+            for d in u.person.dept.all():
+                udict['dept'].append(d.pk)
+            udict['rtx_user']=u.person.rtx_user
+            udict['svn_user']=u.person.svn_user
+            udict['svn_pwd']=u.person.svn_pwd
+
+
+        userlist.append(udict)
+    return getResult(userlist)
     pass
 @login_required
 def userhaschange(request):
@@ -94,10 +111,15 @@ def saveUser(request,obj):
 
 #    u.is_active=True
     u.save()
-    person=u.person
+    if hasattr(u,'person'):
+        person=u.person
+    else:
+        person=None
     if not person:
         person=Person()
         person.user=u
+        person.save()
+
     if obj.has_key('dept'):
         person.dept=Dept.objects.filter(id__in=obj['dept'])
     if obj.has_key('rtx_user'):
@@ -137,19 +159,40 @@ def getUserById(request,id):
     pass
 
 
+def saveDept(request,deptObj):
+    dept=Dept()
+    if deptObj.has_key('id'):
+        dept=Dept.objects.get(pk=deptObj.get('id',None))
+    if dept:
+        if deptObj.has_key('name'):
+            dept.name=deptObj.get('name',None)
+        if deptObj.has_key('desc'):
+            dept.desc=deptObj.get('desc',None)
+        if deptObj.has_key('is_del'):
+            dept.is_del=deptObj.get('is_del',None)
+        if deptObj.has_key('parent_dept'):
+            dept.parent_dept=Dept.objects.get(pk=deptObj.get('parent_dept',None))
+        dept.save()
+    return getResult(True)
+
 def getAllDept(request):
+    return getResult(Dept.objects.all())
+def getAllUsedDept(request):
     return getResult(Dept.objects.filter(is_del=False))
 
 
 
 
+
 oaGateway = DjangoGateway({
-  'service.getUser': getUser,
-  'service.userhaschange': userhaschange,
-  'service.saveUser': saveUser,
-  'service.changeUserPassword': changeUserPassword,
-  'service.getAllUser': getAllUser,
-  'service.getAllDept': getAllUser,
-  'service.getUserById': getUserById,
+    'service.getUser': getUser,
+    'service.userhaschange': userhaschange,
+    'service.saveUser': saveUser,
+    'service.changeUserPassword': changeUserPassword,
+    'service.getAllUser': getAllUser,
+    'service.getAllUsedDept': getAllUsedDept,
+    'service.getAllDept': getAllDept,
+    'service.getUserById': getUserById,
+    'service.saveDept': saveDept,
     })
-  
+

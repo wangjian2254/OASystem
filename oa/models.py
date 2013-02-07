@@ -11,7 +11,9 @@ class Dept(models.Model):
     name=models.CharField(max_length=30,verbose_name=u'部门名称')
     desc=models.CharField(max_length=200,verbose_name=u'部门简介')
     parent_dept=models.ForeignKey("Dept",blank=True,null=True,verbose_name=u'父级部门')
+    user=models.ForeignKey(User,verbose_name=u'负责人',blank=True,null=True,help_text=u'一把手、管理者')
     is_del=models.BooleanField(default=False,verbose_name=u'是否废弃')
+
 
 class DownloadFile(models.Model):
     name=models.CharField(max_length=30,verbose_name=u'文件名称')
@@ -61,7 +63,7 @@ class Role(models.Model):
 class Person(models.Model):
     #用户个人信息
     user=models.OneToOneField(User,verbose_name=u'登录账户')
-    dept=models.ManyToManyField(Dept,verbose_name=u'隶属部门')
+    dept=models.ManyToManyField(Dept,blank=True,null=True,verbose_name=u'隶属部门')
     rtx_user=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'腾讯通账号')
     svn_user=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'svn账号')
     svn_pwd=models.CharField(max_length=10,blank=True,null=True,verbose_name=u'svn密码')

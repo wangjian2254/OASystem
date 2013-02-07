@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <menu mod='myMenu1'>
+        <menuitem label="部门管理" mod='dept'>
+        </menuitem>
+        <menuitem label="人员管理" mod='people'>
+        </menuitem>
+    </menu>
+    <menu mod='myMenu2'>
+        <menuitem label="新建项目" mod='addproject'>
+        </menuitem>
+        <menuitem label="项目列表" mod='projectlist'>
+        </menuitem>
+        <menuitem label="版本日志" mod='svnlog'>
+        </menuitem>
+        <menuitem label="新建任务" mod='addtask'>
+        </menuitem>
+        <menuitem label="任务列表" mod='tasklist'>
+        </menuitem>
+    </menu>
+    <menu mod='myMenu3'>
+        <menuitem label="日自检" mod='daily'>
+        </menuitem>
+        <menuitem label="周自检" mod='weekly'>
+        </menuitem>
+        <menuitem label="月自检" mod='monthly'>
+        </menuitem>
+        <menuitem label="年自检" mod='yearly'>
+        </menuitem>
+    </menu>
+    <menu mod='myMenu4'>
+        <menuitem label="请假" mod='day'>
+        </menuitem>
+        <menuitem label="申请" mod='aply'>
+        </menuitem>
+    </menu>
+</root>
